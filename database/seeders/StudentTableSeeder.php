@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class HeadmasterSeederTable extends Seeder
+class StudentTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,11 @@ class HeadmasterSeederTable extends Seeder
     public function run(): void
     {
         User::create([
-            'name' => 'Headmaster',
-            'email' => 'headmaster@example.com',
+            'name' => 'Student',
+            'email' => 'student@example.com',
             'password' => Hash::make('123456789'),
-            'role' => 'Headmaster',
+            'role' => 'Student',
+            'created_by' => 2,
         ]);
     }
 }

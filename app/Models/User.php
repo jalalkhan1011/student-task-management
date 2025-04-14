@@ -36,6 +36,7 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'created_by');
     }
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
