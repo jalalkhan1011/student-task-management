@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         User::truncate();
         $this->call([
             HeadmasterSeederTable::class,
+            TeacherSeederTable::class,
         ]);
     }
 }

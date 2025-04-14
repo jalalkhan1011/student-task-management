@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['Headmaster', 'Teacher', 'Student'])->default('Student')->after('name');
+            $table->unsignedBigInteger('created_by')->nullable()->after('role');
+            $table->softDeletes();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
+            $table->dropColumn('created_by');
+            $table->dropSoftDeletes();
         });
     }
 };
