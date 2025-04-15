@@ -48,8 +48,8 @@
                                     <div class="form-group">
                                         <label for="scheduled_at">{{ __('scheduled') }}<span class="text-danger">
                                                 *</span></label>
-                                        <input type="date" class="form-control" id="scheduled_at" name="scheduled_at"
-                                            value="{{ old('scheduled_at', date('d-m-Y', strtotime($announcement->scheduled_at))) }}"
+                                        <input type="datetime-local" class="form-control" id="scheduled_at" name="scheduled_at"
+                                            value="{{ old('scheduled_at', $announcement->scheduled_at) }}"
                                             aria-describedby="nameHelp" placeholder="Enter scheduled_at" required>
 
                                         <div class="clearfix"></div>
