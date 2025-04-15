@@ -4,9 +4,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeletionRequestController;
 use App\Http\Controllers\Headmaster\AnnouncementController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Student\TaskSubmissionController;
 use App\Http\Controllers\StudentDeleteController;
 use App\Http\Controllers\StudentTaskController;
 use App\Http\Controllers\TaskApproveController;
+use App\Http\Controllers\Teacher\FeedbackController;
 use App\Http\Controllers\Teacher\StudentController;
 use App\Http\Controllers\Teacher\TaskController;
 use Illuminate\Support\Facades\Auth;
@@ -46,12 +48,16 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:Teacher'])->group(function () {
         Route::post('student-delte-request/{student}', [DeletionRequestController::class, 'deleteRequest'])->name('student.delete.request');
         Route::resource('/tasks', TaskController::class);
+        Route::get('/feedback-form/{id}', [FeedbackController::class, 'create'])->name('feedback.form');
+        Route::post('/submissions/{submission}/feedback', [FeedbackController::class, 'store'])->name('submissions.feedback');
     });
     //Teacher Route end
 
     //Student Route start
     Route::middleware(['role:Student'])->group(function () {
         Route::get('/assign-task', [StudentTaskController::class, 'index'])->name('assign.task');
+        Route::get('/task-form/{id}', [TaskSubmissionController::class, 'create'])->name('tasks.form');
+        Route::post('/tasks/{task}/submit', [TaskSubmissionController::class, 'store'])->name('tasks.submit');
     });
     //Student Route end
 });

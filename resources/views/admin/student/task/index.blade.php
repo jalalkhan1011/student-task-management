@@ -41,6 +41,7 @@
                                         <th scope="col">{{ __('Teacher') }}</th>
                                         <th scope="col">{{ __('Student') }}</th>
                                         <th scope="col">{{ __('Aprrove') }}</th>
+                                        <th scope="col">{{ __('Action') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -56,6 +57,13 @@
                                                 @if ($task->approved_at != null)
                                                     {{ date('d-m-Y h:i', strtotime($task->approved_at ?: '')) }}
                                                 @endif
+                                            </td>
+                                            <td>
+                                                <li class="list-inline-item">
+                                                    <a href="{{ route('tasks.form', $task->id) }}"
+                                                        class="btn btn-success btn-sm"><i
+                                                            class="fa fa-edit">{{ __('Submit task') }}</i></a>
+                                                </li>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Task extends Model
 {
     use SoftDeletes;
-    
+
     protected $fillable = ['title', 'description', 'teacher_id', 'student_id', 'approved_at'];
 
     public function teacher()
@@ -19,5 +19,10 @@ class Task extends Model
     public function student()
     {
         return $this->belongsTo(User::class, 'student_id');
+    }
+
+    public function submissions()
+    {
+        return $this->hasMany(TaskSubmission::class);
     }
 }

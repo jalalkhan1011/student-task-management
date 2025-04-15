@@ -76,43 +76,13 @@
                                                         </li>
                                                     @endif
                                                 @endif
-                                                {{-- @if (Auth::user()->role == 'Teacher')
-                                                    @if ($student->status == null)
-                                                        <li class="list-inline-item">
-                                                            <form
-                                                                action="{{ route('student.delete.request', $student->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                                        class="fa fa-trash">
-                                                                        {{ __('Delete Request') }}</i></button>
-                                                            </form>
-                                                        </li>
-                                                    @endif
+                                                @if ($task->approved_at != null)
+                                                <li class="list-inline-item">
+                                                    <a href="{{ route('feedback.form', $task->id) }}"
+                                                        class="btn btn-success btn-sm"><i
+                                                            class="fa fa-edit">{{ __('Feedback') }}</i></a>
+                                                </li>
                                                 @endif
-                                                @if (Auth::user()->role == 'Headmaster')
-                                                    @if ($student->status == 'pending')
-                                                        <li class="list-inline-item">
-                                                            <form action="{{ route('student.delete', $student->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                                        class="fa fa-trash">
-                                                                        {{ __('Delete') }}</i></button>
-                                                            </form>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <form
-                                                                action="{{ route('student.delete.reject', $student->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-secondary btn-sm"><i
-                                                                        class="fa fa-trash">
-                                                                        {{ __('Delete Reject') }}</i></button>
-                                                            </form>
-                                                        </li>
-                                                    @endif
-                                                @endif--}}
                                             </ul>
                                         </td> 
                                     </tr>
