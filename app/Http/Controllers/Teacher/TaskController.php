@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\User;
+use App\Notifications\TaskStatusNotification;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -50,12 +51,15 @@ class TaskController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        Task::create([
+        $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
             'teacher_id' => auth()->user()->id,
             'student_id' => $student->id,
         ]);
+
+        $task->student->notify(new TaskStatusNotification($task, 'created'));
+        $task->teacher->notify(new TaskStatusNotification($task, 'created'));
 
         return redirect()->route('tasks.index')->with('success', 'Task assigned.');
     }

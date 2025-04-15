@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Notifications\TaskStatusNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 
 class TaskApproveController extends Controller
 {
@@ -23,6 +25,8 @@ class TaskApproveController extends Controller
     {
         $task = Task::findOrFail($id);
         $task->update(['approved_at' => now()]);
+
+        Notification::send([$task->teacher, $task->student], new TaskStatusNotification($task, 'approved'));
 
         return back()->with('message', 'Task approved.');
     }

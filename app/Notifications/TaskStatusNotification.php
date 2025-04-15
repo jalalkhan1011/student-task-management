@@ -7,16 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class StudentCreatedNotification extends Notification implements ShouldQueue
+class TaskStatusNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public $task;
+    public $action;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($task, $action)
     {
-        //
+        $this->task = $task;
+        $this->action = $action;
     }
 
     /**
@@ -36,9 +39,8 @@ class StudentCreatedNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->subject('New Student Created')
-        ->line('A new student has been created by ' . auth()->user()->name . '.')
-        ->action('View Students', url('/students'));
+        ->subject("Task {$this->action}")
+        ->line("A task titled '{$this->task->title}' was {$this->action}.");
     }
 
     /**
