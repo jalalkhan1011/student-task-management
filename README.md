@@ -64,3 +64,17 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+##About project##
+1. First clone the project form github.
+2. Then configuar .env file you can use .env.example file just rename the file to .env
+3. After configuar the .env file run npm i , npm run dev or npm run build for node modules.
+4. Run composer update.
+5. run php artisan storage:link commend for image storege.
+6. run php artisan migrate:fresh --seed for database migration and seed some default value. i add some default value(
+    1. headmaster@example.com(p->123456789)
+    2. teacher@example.com(p->123456789)
+    3. student@example.com(p->123456789)
+)
+7. a also include data base file and push to github.
+8. databse file name is student_t_m.sql 
