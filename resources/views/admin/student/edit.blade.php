@@ -25,7 +25,7 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label for="exampleInputEmail1">{{ __('Name') }}</label>
+                                <label for="exampleInputEmail1">{{ __('Name') }}<span class="text-danger"> *</span></label>
                                 <input type="text" class="form-control" id="name" name="name"
                                     value="{{ old('name', $student->name) }}" aria-describedby="nameHelp"
                                     placeholder="Enter name" required>
@@ -37,7 +37,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">{{ __('Email address') }}</label>
+                                <label for="exampleInputEmail1">{{ __('Email address') }}<span class="text-danger"> *</span></label>
                                 <input id="email" type="email"
                                     class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email', $student->email) }}" required autocomplete="email">

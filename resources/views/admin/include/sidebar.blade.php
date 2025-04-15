@@ -30,13 +30,24 @@
                 <span>{{ __('Students') }}</span>
             </a>
         @endif
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="buttons.html">Buttons</a>
-                <a class="collapse-item" href="cards.html">Cards</a>
-            </div>
-        </div>
+        @if (Auth::user()->role == 'Teacher')
+            <a class="nav-link collapsed" href="{{ route('tasks.index') }}">
+                <i class="fas fa-fw fa-solid fa-user-graduate"></i>
+                <span>{{ __('Tasks') }}</span>
+            </a>
+        @endif
+        @if (Auth::user()->role == 'Headmaster')
+            <a class="nav-link collapsed" href="{{ route('task.pending') }}">
+                <i class="fas fa-fw fa-solid fa-user-graduate"></i>
+                <span>{{ __('Pending Tasks') }}</span>
+            </a>
+        @endif
+        @if (Auth::user()->role == 'Student')
+            <a class="nav-link collapsed" href="{{ route('assign.task') }}">
+                <i class="fas fa-fw fa-solid fa-user-graduate"></i>
+                <span>{{ __('Assign Tasks') }}</span>
+            </a>
+        @endif
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->

@@ -24,7 +24,7 @@
                         <form action="{{ route('students.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">{{ __('Name') }}</label>
+                                <label for="exampleInputEmail1">{{ __('Name') }}<span class="text-danger"> *</span></label>
                                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}"
                                     aria-describedby="nameHelp" placeholder="Enter name" required>
 
@@ -35,7 +35,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputEmail1">{{ __('Email address') }}</label>
+                                <label for="exampleInputEmail1">{{ __('Email address') }}<span class="text-danger"> *</span></label>
                                 <input id="email" type="email" 
                                     class="form-control @error('email') is-invalid @enderror" name="email"
                                     value="{{ old('email') }}" required autocomplete="email">
@@ -47,7 +47,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">{{ __('Password') }}</label>
+                                <label for="exampleInputPassword1">{{ __('Password') }}<span class="text-danger"> *</span></label>
                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password" required
                                     autocomplete="new-password">
@@ -59,7 +59,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">{{ __('Confirm Password') }}</label>
+                                <label for="exampleInputPassword1">{{ __('Confirm Password') }}<span class="text-danger"> *</span></label>
                                 <input id="password-confirm" type="password" class="form-control"
                                     name="password_confirmation" required autocomplete="new-password">
                             </div>
