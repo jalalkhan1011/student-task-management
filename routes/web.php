@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeletionRequestController;
 use App\Http\Controllers\Headmaster\AnnouncementController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentDeleteController;
 use App\Http\Controllers\StudentTaskController;
 use App\Http\Controllers\TaskApproveController;
@@ -18,6 +19,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    //profile route
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    //profile route end
+    
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/students', StudentController::class)->middleware(['auth', 'role:Headmaster|Teacher']);
 

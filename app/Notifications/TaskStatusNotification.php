@@ -29,8 +29,7 @@ class TaskStatusNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        // return ['mail'];
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -39,8 +38,8 @@ class TaskStatusNotification extends Notification implements ShouldQueue
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-        ->subject("Task {$this->action}")
-        ->line("A task titled '{$this->task->title}' was {$this->action}.");
+            ->subject("Task {$this->action}")
+            ->line("A task titled '{$this->task->title}' was {$this->action}.");
     }
 
     /**

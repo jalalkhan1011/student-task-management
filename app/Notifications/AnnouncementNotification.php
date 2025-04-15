@@ -28,8 +28,7 @@ class AnnouncementNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        // return ['mail'];
-        return ['database'];
+        return ['mail','database']; 
     }
 
     /**
