@@ -23,7 +23,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     //profile route end
-    
+
+    //password chage route
+    Route::get('/password', [ProfileController::class, 'changePassword'])->name('password.change');
+    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
+    //password chage route end
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('/students', StudentController::class)->middleware(['auth', 'role:Headmaster|Teacher']);
 
