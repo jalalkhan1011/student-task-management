@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Models\DeletionRequest;
 use App\Models\User;
+use App\Notifications\StudentCreatedNotification;
+use App\Notifications\StudentWelcomeNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Notification;
 
 class StudentController extends Controller
 {
@@ -21,7 +24,7 @@ class StudentController extends Controller
     public function index()
     {
         $deletions = DeletionRequest::all();
-        
+
         if (auth()->user()->role == 'Teacher') {
             $students = User::where('role', 'student')->where('created_by', auth()->user()->id)->withTrashed()->get();
         } else {
@@ -59,7 +62,14 @@ class StudentController extends Controller
             'created_by' => auth()->user()->id,
         ];
 
-        User::create($data);
+        $student = User::create($data);
+
+        //Headmaster Notify
+        $headmasters = User::where('role', 'Headmaster')->get();
+        Notification::send($headmasters, new StudentCreatedNotification($student));
+
+        //Student Welcome 
+        $student->notify(new StudentWelcomeNotification());
 
         return redirect(route('students.index'))->with('success', 'Student created successfully!');
     }
