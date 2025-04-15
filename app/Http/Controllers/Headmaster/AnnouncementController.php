@@ -16,7 +16,7 @@ class AnnouncementController extends Controller
     {
         $this->middleware(['auth', 'role:Headmaster']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -45,32 +45,32 @@ class AnnouncementController extends Controller
             'image' => 'nullable|image',
             'scheduled_at' => 'required|date|after:now',
         ]);
-    
+
         $paths = [
             'original' => null,
             'webp' => null,
         ];
-    
+
         if ($request->hasFile('image')) {
             $original = $request->file('image');
-            $filename = uniqid().'.'.$original->getClientOriginalExtension();
-            $webpName = uniqid().'.webp';
-    
+            $filename = uniqid() . '.' . $original->getClientOriginalExtension();
+            $webpName = uniqid() . '.webp';
+
             //original
             $originalPath = $original->storeAs('announcements/original', $filename, 'public');
             $paths['original'] = $originalPath;
-    
+
             // webp convert
             $imageManager = new ImageManager(
                 new \Intervention\Image\Drivers\Gd\Driver()
             );
             $image = $imageManager->read($original);
             $encoded = $image->encode(new WebpEncoder(quality: 80));
-            
+
             Storage::disk('public')->put('announcements/webp/' . $webpName, $encoded);
-            $paths['webp'] = 'announcements/webp/'.$webpName;
+            $paths['webp'] = 'announcements/webp/' . $webpName;
         }
-    
+
         $announcement = Announcement::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -78,7 +78,7 @@ class AnnouncementController extends Controller
             'webp_image_path' => $paths['webp'],
             'scheduled_at' => $request->scheduled_at,
         ]);
-    
+
         return redirect()->route('announcements.index')->with('success', 'Announcement created.');
     }
 
@@ -97,7 +97,7 @@ class AnnouncementController extends Controller
     {
         $announcement = Announcement::findOrFail($id);
 
-        return view('admin.headmaster.announcement.edit',compact('announcement'));
+        return view('admin.headmaster.announcement.edit', compact('announcement'));
     }
 
     /**
@@ -112,40 +112,40 @@ class AnnouncementController extends Controller
             'image' => 'nullable|image',
             'scheduled_at' => 'required|date|after:now',
         ]);
-    
+
         $paths = [
             'original' => null,
             'webp' => null,
         ];
-    
+
         if ($request->hasFile('image')) {
             $original = $request->file('image');
-            $filename = uniqid().'.'.$original->getClientOriginalExtension();
-            $webpName = uniqid().'.webp';
-    
+            $filename = uniqid() . '.' . $original->getClientOriginalExtension();
+            $webpName = uniqid() . '.webp';
+
             //original
             $originalPath = $original->storeAs('announcements/original', $filename, 'public');
             $paths['original'] = $originalPath;
-    
+
             // webp convert
             $imageManager = new ImageManager(
                 new \Intervention\Image\Drivers\Gd\Driver()
             );
             $image = $imageManager->read($original);
             $encoded = $image->encode(new WebpEncoder(quality: 80));
-            
+
             Storage::disk('public')->put('announcements/webp/' . $webpName, $encoded);
-            $paths['webp'] = 'announcements/webp/'.$webpName;
+            $paths['webp'] = 'announcements/webp/' . $webpName;
         }
-    
+
         $announcement->update([
             'title' => $request->title,
             'description' => $request->description,
             'original_image_path' => $paths['original'],
             'webp_image_path' => $paths['webp'],
             'scheduled_at' => $request->scheduled_at,
-        ]); 
-    
+        ]);
+
         return redirect()->route('announcements.index')->with('success', 'Announcement update.');
     }
 
@@ -154,6 +154,10 @@ class AnnouncementController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $announcement = Announcement::findOrFail($id);
+
+        $announcement->delete();
+
+        return back()->with('success', 'Announcement Deleted.');
     }
 }

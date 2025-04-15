@@ -54,6 +54,16 @@
                                                         class="btn btn-warning btn-sm"><i
                                                             class="fa fa-edit">{{ __('EDIT') }}</i></a>
                                                 </li>
+                                                <li class="list-inline-item">
+                                                    <form action="{{ route('announcements.destroy', $announcement->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fa fa-trash">
+                                                                {{ __('Delete') }}</i></button>
+                                                    </form>
+                                                </li>
                                             </ul>
                                         </td>
                                     </tr>
