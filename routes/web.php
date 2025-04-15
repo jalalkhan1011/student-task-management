@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeletionRequestController;
+use App\Http\Controllers\Headmaster\AnnouncementController;
 use App\Http\Controllers\StudentDeleteController;
 use App\Http\Controllers\StudentTaskController;
 use App\Http\Controllers\TaskApproveController;
@@ -26,6 +27,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('student-delete-request-reject/{id}', [StudentDeleteController::class, 'studentDeleteReject'])->name('student.delete.reject');
         Route::get('pending-task-list', [TaskApproveController::class, 'index'])->name('task.pending');
         Route::post('pending-task-approve/{id}', [TaskApproveController::class, 'taskApprove'])->name('task.approve');
+        Route::resource('announcements', AnnouncementController::class);
     });
     //Headmaster Route end
 
