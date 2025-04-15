@@ -20,6 +20,7 @@ Route::middleware(['auth'])->group(function () {
     //Headmaster Route start
     Route::middleware(['role:Headmaster'])->group(function(){
         Route::post('student-delete/{id}',[StudentDeleteController::class,'deleteStudent'])->name('student.delete');
+        Route::post('student-delete-request-reject/{id}',[StudentDeleteController::class,'studentDeleteReject'])->name('student.delete.reject');
     });
     //Headmaster Route end
 

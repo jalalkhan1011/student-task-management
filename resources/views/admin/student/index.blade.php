@@ -54,7 +54,7 @@
                                                     @elseif ($deletion->status == 'approved')
                                                         <span class="badge badge-danger">{{ __('Approved') }}</span>
                                                     @elseif ($deletion->status == 'rejected')
-                                                        <span class="badge badge-seconder">{{ __('Rejected') }}</span>
+                                                        <span class="badge badge-secondary">{{ __('Rejected') }}</span>
                                                     @else
                                                     @endif
                                                 @endif
@@ -63,54 +63,50 @@
                                         <td>
                                             <ul class="list-inline">
                                                 @if (Auth::user()->role == 'Teacher' || Auth::user()->role == 'Headmaster')
-                                                    <li class="list-inline-item">
-                                                        <a href="{{ route('students.edit', $student->id) }}"
-                                                            class="btn btn-warning btn-sm"><i
-                                                                class="fa fa-edit">{{ __('EDIT') }}</i></a>
-                                                    </li>
+                                                    @if ($student->status != 'approved')
+                                                        <li class="list-inline-item">
+                                                            <a href="{{ route('students.edit', $student->id) }}"
+                                                                class="btn btn-warning btn-sm"><i
+                                                                    class="fa fa-edit">{{ __('EDIT') }}</i></a>
+                                                        </li>
+                                                    @endif
                                                 @endif
                                                 @if (Auth::user()->role == 'Teacher')
-                                                    @foreach ($deletions as $deletion)
-                                                        @if ($deletion->student_id == $student->id)
-                                                            @if ($deletion->status == 'pending' || $deletion->status == 'approved' || $deletion->status == 'rejected')
-                                                            @else
-                                                                <li class="list-inline-item">
-                                                                    <form
-                                                                        action="{{ route('student.delete.request', $student->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger btn-sm"><i
-                                                                                class="fa fa-trash">
-                                                                                {{ __('Delete Request') }}</i></button>
-                                                                    </form>
-                                                                </li>
-                                                            @endif
-                                                        @endif
-                                                    @endforeach
+                                                    @if ($student->status == null)
+                                                        <li class="list-inline-item">
+                                                            <form
+                                                                action="{{ route('student.delete.request', $student->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                        class="fa fa-trash">
+                                                                        {{ __('Delete Request') }}</i></button>
+                                                            </form>
+                                                        </li>
+                                                    @endif
                                                 @endif
                                                 @if (Auth::user()->role == 'Headmaster')
-                                                    <li class="list-inline-item">
-                                                        @foreach ($deletions as $deletion)
-                                                            @if ($deletion->student_id == $student->id)
-                                                                @if ($deletion->status == 'pending')
-                                                                    <form
-                                                                        action="{{ route('student.delete', $student->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        <button type="submit"
-                                                                            class="btn btn-danger btn-sm"><i
-                                                                                class="fa fa-trash">
-                                                                                {{ __('Delete') }}</i></button>
-                                                                    </form>
-                                                                @elseif ($deletion->status == 'approved')
-
-                                                                @elseif ($deletion->status == 'rejected')
-                                                                @else
-                                                                @endif
-                                                            @endif
-                                                        @endforeach
-                                                    </li>
+                                                    @if ($student->status == 'pending')
+                                                        <li class="list-inline-item">
+                                                            <form action="{{ route('student.delete', $student->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                        class="fa fa-trash">
+                                                                        {{ __('Delete') }}</i></button>
+                                                            </form>
+                                                        </li>
+                                                        <li class="list-inline-item">
+                                                            <form
+                                                                action="{{ route('student.delete.reject', $student->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <button type="submit" class="btn btn-secondary btn-sm"><i
+                                                                        class="fa fa-trash">
+                                                                        {{ __('Delete Reject') }}</i></button>
+                                                            </form>
+                                                        </li>
+                                                    @endif
                                                 @endif
                                             </ul>
                                         </td>

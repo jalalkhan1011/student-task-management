@@ -24,6 +24,7 @@ class User extends Authenticatable
         'role',
         'created_by',
         'password',
+        'status',
     ];
 
     public function creator()

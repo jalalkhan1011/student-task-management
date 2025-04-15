@@ -16,11 +16,23 @@ class StudentDeleteController extends Controller
     public function deleteStudent($id)
     {
         $student = User::findOrFail($id);
+        $student->update(['status' => 'approved']);
         $student->delete(); // soft delete
         $status = DeletionRequest::where('student_id', $id)->first();
 
         $status->update(['status' => 'approved']);
 
         return back()->with('message', 'Student deleted.');
+    }
+
+    public function studentDeleteReject($id)
+    {
+        $student = User::findOrFail($id);
+        $student->update(['status' => 'rejected']);
+
+        $status = DeletionRequest::where('student_id', $id)->first();
+        $status->update(['status' => 'rejected']);
+
+        return back()->with('message', 'Student deletion request rejected.');
     }
 }

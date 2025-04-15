@@ -23,6 +23,9 @@ class DeletionRequestController extends Controller
             'student_id' => $student->id,
             'requested_by' => auth()->user()->id,
         ]);
+        $student->update([
+            'status' => 'pending'
+        ]);
 
         return back()->with('message', 'Deletion request submitted.');
     }
